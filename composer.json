@@ -1,0 +1,18 @@
+{
+    
+    "name": "flamefox666/hm-7",
+    "autoload": {
+        "psr-4": {
+            "FlameFox666\\Project\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "FlameFox666",
+            "email": "lexarole@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3"
+    }
+}

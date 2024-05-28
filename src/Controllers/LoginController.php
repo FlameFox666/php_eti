@@ -19,21 +19,22 @@
             $view->render();
         }
 
-        public function auth() : void {
-            if(!isset($_POST['login'])) {
-                header('Location: /login');
-                exit;
-            }
-
-            $login = $_POST['login'] ?? '';
-
-            if ($login === 'Test') {
-                $_SESSION['login'] = $login;
-                header('Location: /contacts');
-            } else {
-
-                header('Location: /login');
-            }
+        public function auth(): void
+    {
+        if(!isset($_POST['login'])) {
+            header('Location: /login');
             exit;
         }
+
+        $login = $_POST['login'] ?? '';
+
+        if ($login === 'Test') {
+            $_SESSION['login'] = $login;
+            header('Location: /contacts');
+        } else {
+
+            header('Location: /login');
+        }
+        exit;
+    }
     }

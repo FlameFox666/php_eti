@@ -8,7 +8,7 @@ class AuthMiddleware{
         if (!empty($_SESSION['login']) && $_SESSION['login'] === 'Test') {
             return call_user_func($handler, $vars);
         } else {
-            header('Location: /login');
+            header('Location: /login'); // Перенаправити на сторінку входу
             exit;
         }
     }

@@ -9,13 +9,14 @@
         CONTACTS
     </a>
 
-    @if ($isUserLoggedIn)
+    {if $isUserLoggedIn}
         <a href="/logout" class="w3-bar-item w3-right">
             LOGOUT
         </a>
-    @else
+    {else}
         <a href="/login" class="w3-bar-item w3-right">
             LOGIN
         </a>
-    @endif
+    {/if}
+
 </nav>

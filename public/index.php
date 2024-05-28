@@ -1,6 +1,7 @@
 <?php
 
     session_start();
+    $_SESSION['user_id'] = 69;
 
     require_once __DIR__ . '/../vendor/autoload.php';
     
@@ -10,12 +11,12 @@
 
         $homeController = new FlameFox666\Project\Controllers\HomeController();
         $aboutController = new FlameFox666\Project\Controllers\AboutController();
-        $contactController = new FlameFox666\Project\Controllers\ContactController();
+        $contactsController = new FlameFox666\Project\Controllers\ContactController();
         // Додали контролер для сторінки входу
         $loginController = new FlameFox666\Project\Controllers\LoginController();
 
         // Додали middleware для перевірки авторизації
-        $authMiddleware = new FlameFox666\Project\AuthMiddleware();
+        $authMiddleware = new \FlameFox666\Project\AuthMiddleware();
 
         $r->addRoute('GET', '/', [$homeController, 'index']);
         $r->addRoute('GET', '/home', [$homeController, 'index']);
@@ -32,8 +33,8 @@
         });
 
         // Додаємо "обгортку" для контролера сторінки контактів у вигляді мідлвару
-        $r->addRoute('GET', '/contacts', function ($vars) use ($authMiddleware, $contactController) {
-            return $authMiddleware->handle([$contactController, 'index'], $vars);
+        $r->addRoute('GET', '/contacts', function ($vars) use ($authMiddleware, $contactsController) {
+            return $authMiddleware->handle([$contactsController, 'index'], $vars);
         });
 
         $r->addRoute('POST', '/',[$homeController, 'handleForm']);
@@ -51,7 +52,6 @@
     $uri = rawurldecode($uri);
 
     $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
-    var_dump($routeInfo); // Отладочный вывод
     switch ($routeInfo[0]) {
         case FastRoute\Dispatcher::NOT_FOUND:
             // ... 404 Not Found
@@ -65,12 +65,10 @@
         case FastRoute\Dispatcher::FOUND:
             $handler = $routeInfo[1];
             $vars = $routeInfo[2];
-            var_dump($handler); // Отладочный вывод
             if (is_callable($handler)) {
                 call_user_func($handler, $vars);
             } else {
-                $handler[0]->{$handler[1]}($vars);
+                $handler->handle($handler, $vars);
             }
             break;
-}
-    
+    }

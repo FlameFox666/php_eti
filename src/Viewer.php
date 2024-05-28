@@ -1,28 +1,28 @@
 <?php
+
     namespace FlameFox666\Project;
 
-    use Jenssegers\Blade\Blade;
+    use Latte;
 
     class Viewer
     {
-        private array $data = [];
         
+        private array $data = [];
+
         public function __construct(array $data = []){
             $this->data = $data;
         }
 
         public function render(): void
         {
-            $views = __DIR__ . '/../views';
-            $cache = __DIR__ . '/../views/cache';
-
-            $blade = new Blade($views, $cache);
+            $latte = new Latte\Engine;
+            $latte->setTempDirectory(__DIR__ . '/../views/cache');
 
             $isUserLoggedIn = !empty($_SESSION['login']) && $_SESSION['login'] === 'Test';
 
             $params = $this->data;
             $params['isUserLoggedIn'] = $isUserLoggedIn;
 
-            echo $blade->render('index', $params);
+            $latte->render(__DIR__ . '/../views/index.latte', $params);
         }
     }

@@ -4,12 +4,12 @@
     
     use FlameFox666\Project\Viewer;
 
-    class ContactController {
+    class ContactsController {
         public function index() : void {
-            $page = 'contact';
-            $title = 'Contacnt Page';
+            $page = 'Contacts';
+            $title = 'Contacts Page';
             $content = 'We\'re ghost organisation!';
-            $info = 'never gonna give you up!';
+            $info = 'never gonna let\'s you down!';
 
             $view = new Viewer([
                 'page' => $page,

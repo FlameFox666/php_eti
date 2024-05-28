@@ -5,26 +5,27 @@
 
     require_once __DIR__ . '/../vendor/autoload.php';
     
-    $db = new FlameFox666\Project\Database();
+    //$db = new FlameFox666\Project\Database();
 
     $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
         $homeController = new FlameFox666\Project\Controllers\HomeController();
         $aboutController = new FlameFox666\Project\Controllers\AboutController();
-        $contactsController = new FlameFox666\Project\Controllers\ContactController();
+        $contactsController = new FlameFox666\Project\Controllers\ContactsController();
         // Додали контролер для сторінки входу
-        $loginController = new FlameFox666\Project\Controllers\LoginController();
+        //$loginController = new FlameFox666\Project\Controllers\LoginController();
 
         // Додали middleware для перевірки авторизації
-        $authMiddleware = new \FlameFox666\Project\AuthMiddleware();
+        //$authMiddleware = new \FlameFox666\Project\AuthMiddleware();
 
         $r->addRoute('GET', '/', [$homeController, 'index']);
         $r->addRoute('GET', '/home', [$homeController, 'index']);
         $r->addRoute('GET', '/about', [$aboutController, 'index']);
+        $r->addRoute('GET', '/contacts', [$contactsController, 'index']);
 
         // Додаємо маршрути для сторінки входу
-        $r->addRoute('GET', '/login', [$loginController, 'index']);
-        $r->addRoute('POST', '/login', [$loginController, 'auth']);
+        //$r->addRoute('GET', '/login', [$loginController, 'index']);
+        //$r->addRoute('POST', '/login', [$loginController, 'auth']);
 
         // Додаємо маршрут для виходу
         $r->addRoute('GET', '/logout', function ($vars) {
@@ -33,9 +34,11 @@
         });
 
         // Додаємо "обгортку" для контролера сторінки контактів у вигляді мідлвару
+    /*
         $r->addRoute('GET', '/contacts', function ($vars) use ($authMiddleware, $contactsController) {
             return $authMiddleware->handle([$contactsController, 'index'], $vars);
         });
+    */
 
         $r->addRoute('POST', '/',[$homeController, 'handleForm']);
         $r->addRoute('GET', '/home/delete', [$homeController, 'handleFormDelete']);

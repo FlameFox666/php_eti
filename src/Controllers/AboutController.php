@@ -8,7 +8,7 @@
         public function index() : void {
             $page = 'about';
             $title = 'About Page';
-            $content = 'Hello! It\'s fox plush shop!';
+            $content = 'Hello! It\'s nothing!';
             $info = 'never gonna give you up!';
 
             $view = new Viewer([
